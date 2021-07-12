@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'faraday', '~> 0.14.0'
   s.add_runtime_dependency 'mimemagic', '~> 0.3.2'
-  s.add_runtime_dependency 'addressable', '~> 2.5.0', '>= 2.5.0'
+  s.add_runtime_dependency 'addressable', '>= 2.5', '< 2.9'
   
   s.add_development_dependency 'minitest', '~> 5.11', '>= 5.11.3'
 
