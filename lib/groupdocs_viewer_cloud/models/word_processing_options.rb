@@ -1,7 +1,7 @@
  #
  # --------------------------------------------------------------------------------------------------------------------
  # <copyright company="Aspose Pty Ltd" file="word_processing_options.rb">
- #   Copyright (c) 2003-2024 Aspose Pty Ltd
+ #   Copyright (c) Aspose Pty Ltd
  # </copyright>
  # <summary>
  #  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -46,6 +46,39 @@ module GroupDocsViewerCloud
     # Bottom page margin (for HTML rendering only)
     attr_accessor :bottom_margin
 
+    # The size of the page.
+    attr_accessor :page_size
+
+    # This option enables kerning and other OpenType Features when rendering Arabic, Hebrew, Indian Latin-based, or Cyrillic-based scripts.
+    attr_accessor :enable_open_type_features
+
+    # When rendering to HTML or PDF, you can set this option to `true` to disable navigation from the table of contents. For HTML rendering, `a` tags with relative links will be replaced with `span` tags, removing functionality but preserving visual appearance. For PDF rendering, the table of contents will be rendered as plain text without links to document sections.             
+    attr_accessor :unlink_table_of_contents
+
+    # Determines if fields of certain types should be updated before saving the input WordProcessing document to the HTML, PDF, PNG, or JPEG output formats. Default value for this property is true — fields will be updated before saving.             
+    attr_accessor :update_fields
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -53,7 +86,11 @@ module GroupDocsViewerCloud
         :'left_margin' => :'LeftMargin',
         :'right_margin' => :'RightMargin',
         :'top_margin' => :'TopMargin',
-        :'bottom_margin' => :'BottomMargin'
+        :'bottom_margin' => :'BottomMargin',
+        :'page_size' => :'PageSize',
+        :'enable_open_type_features' => :'EnableOpenTypeFeatures',
+        :'unlink_table_of_contents' => :'UnlinkTableOfContents',
+        :'update_fields' => :'UpdateFields'
       }
     end
 
@@ -64,7 +101,11 @@ module GroupDocsViewerCloud
         :'left_margin' => :'Float',
         :'right_margin' => :'Float',
         :'top_margin' => :'Float',
-        :'bottom_margin' => :'Float'
+        :'bottom_margin' => :'Float',
+        :'page_size' => :'String',
+        :'enable_open_type_features' => :'BOOLEAN',
+        :'unlink_table_of_contents' => :'BOOLEAN',
+        :'update_fields' => :'BOOLEAN'
       }
     end
 
@@ -96,6 +137,22 @@ module GroupDocsViewerCloud
         self.bottom_margin = attributes[:'BottomMargin']
       end
 
+      if attributes.key?(:'PageSize')
+        self.page_size = attributes[:'PageSize']
+      end
+
+      if attributes.key?(:'EnableOpenTypeFeatures')
+        self.enable_open_type_features = attributes[:'EnableOpenTypeFeatures']
+      end
+
+      if attributes.key?(:'UnlinkTableOfContents')
+        self.unlink_table_of_contents = attributes[:'UnlinkTableOfContents']
+      end
+
+      if attributes.key?(:'UpdateFields')
+        self.update_fields = attributes[:'UpdateFields']
+      end
+
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -122,6 +179,22 @@ module GroupDocsViewerCloud
         invalid_properties.push("invalid value for 'bottom_margin', bottom_margin cannot be nil.")
       end
 
+      if @page_size.nil?
+        invalid_properties.push("invalid value for 'page_size', page_size cannot be nil.")
+      end
+
+      if @enable_open_type_features.nil?
+        invalid_properties.push("invalid value for 'enable_open_type_features', enable_open_type_features cannot be nil.")
+      end
+
+      if @unlink_table_of_contents.nil?
+        invalid_properties.push("invalid value for 'unlink_table_of_contents', unlink_table_of_contents cannot be nil.")
+      end
+
+      if @update_fields.nil?
+        invalid_properties.push("invalid value for 'update_fields', update_fields cannot be nil.")
+      end
+
       return invalid_properties
     end
 
@@ -133,7 +206,27 @@ module GroupDocsViewerCloud
       return false if @right_margin.nil?
       return false if @top_margin.nil?
       return false if @bottom_margin.nil?
+      return false if @page_size.nil?
+      page_size_validator = EnumAttributeValidator.new('String', ["Unspecified", "Letter", "Ledger", "A0", "A1", "A2", "A3", "A4"])
+      return false unless page_size_validator.valid?(@page_size)
+      return false if @enable_open_type_features.nil?
+      return false if @unlink_table_of_contents.nil?
+      return false if @update_fields.nil?
       return true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] page_size Object to be assigned
+    def page_size=(page_size)
+      validator = EnumAttributeValidator.new('String', ["Unspecified", "Letter", "Ledger", "A0", "A1", "A2", "A3", "A4"])
+      if page_size.to_i == 0
+        unless validator.valid?(page_size)
+          raise ArgumentError, "invalid value for 'page_size', must be one of #{validator.allowable_values}."
+        end
+        @page_size = page_size
+      else
+        @page_size = validator.allowable_values[page_size.to_i]
+      end
     end
 
     # Checks equality by comparing each attribute.
@@ -145,7 +238,11 @@ module GroupDocsViewerCloud
           left_margin == other.left_margin &&
           right_margin == other.right_margin &&
           top_margin == other.top_margin &&
-          bottom_margin == other.bottom_margin
+          bottom_margin == other.bottom_margin &&
+          page_size == other.page_size &&
+          enable_open_type_features == other.enable_open_type_features &&
+          unlink_table_of_contents == other.unlink_table_of_contents &&
+          update_fields == other.update_fields
     end
 
     # @see the `==` method
@@ -157,7 +254,7 @@ module GroupDocsViewerCloud
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [render_tracked_changes, left_margin, right_margin, top_margin, bottom_margin].hash
+      [render_tracked_changes, left_margin, right_margin, top_margin, bottom_margin, page_size, enable_open_type_features, unlink_table_of_contents, update_fields].hash
     end
 
     # Downcases first letter.

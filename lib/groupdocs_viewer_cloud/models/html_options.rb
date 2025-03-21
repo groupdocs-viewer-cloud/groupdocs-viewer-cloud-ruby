@@ -1,7 +1,7 @@
  #
  # --------------------------------------------------------------------------------------------------------------------
  # <copyright company="Aspose Pty Ltd" file="html_options.rb">
- #   Copyright (c) 2003-2024 Aspose Pty Ltd
+ #   Copyright (c) Aspose Pty Ltd
  # </copyright>
  # <summary>
  #  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -133,6 +133,9 @@ module GroupDocsViewerCloud
     # Enables HTML content will be rendered to single page
     attr_accessor :render_to_single_page
 
+    # Allows to remove the JavaScript source code from the links in resultant HTML documents, when rendering input documents, which have the scripts. By default is enabled (true).             
+    attr_accessor :remove_java_script
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -169,7 +172,8 @@ module GroupDocsViewerCloud
         :'image_width' => :'ImageWidth',
         :'image_max_height' => :'ImageMaxHeight',
         :'image_max_width' => :'ImageMaxWidth',
-        :'render_to_single_page' => :'RenderToSinglePage'
+        :'render_to_single_page' => :'RenderToSinglePage',
+        :'remove_java_script' => :'RemoveJavaScript'
       }
     end
 
@@ -209,7 +213,8 @@ module GroupDocsViewerCloud
         :'image_width' => :'Integer',
         :'image_max_height' => :'Integer',
         :'image_max_width' => :'Integer',
-        :'render_to_single_page' => :'BOOLEAN'
+        :'render_to_single_page' => :'BOOLEAN',
+        :'remove_java_script' => :'BOOLEAN'
       }
     end
 
@@ -363,6 +368,10 @@ module GroupDocsViewerCloud
         self.render_to_single_page = attributes[:'RenderToSinglePage']
       end
 
+      if attributes.key?(:'RemoveJavaScript')
+        self.remove_java_script = attributes[:'RemoveJavaScript']
+      end
+
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -429,6 +438,10 @@ module GroupDocsViewerCloud
         invalid_properties.push("invalid value for 'render_to_single_page', render_to_single_page cannot be nil.")
       end
 
+      if @remove_java_script.nil?
+        invalid_properties.push("invalid value for 'remove_java_script', remove_java_script cannot be nil.")
+      end
+
       return invalid_properties
     end
 
@@ -450,6 +463,7 @@ module GroupDocsViewerCloud
       return false if @image_max_height.nil?
       return false if @image_max_width.nil?
       return false if @render_to_single_page.nil?
+      return false if @remove_java_script.nil?
       return true
     end
 
@@ -491,7 +505,8 @@ module GroupDocsViewerCloud
           image_width == other.image_width &&
           image_max_height == other.image_max_height &&
           image_max_width == other.image_max_width &&
-          render_to_single_page == other.render_to_single_page
+          render_to_single_page == other.render_to_single_page &&
+          remove_java_script == other.remove_java_script
     end
 
     # @see the `==` method
@@ -503,7 +518,7 @@ module GroupDocsViewerCloud
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [start_page_number, count_pages_to_render, pages_to_render, page_rotations, default_font_name, default_encoding, detect_encoding, render_comments, render_notes, render_hidden_pages, spreadsheet_options, cad_options, email_options, project_management_options, pdf_document_options, word_processing_options, outlook_options, archive_options, text_options, mail_storage_options, visio_rendering_options, web_document_options, external_resources, resource_path, is_responsive, minify, exclude_fonts, fonts_to_exclude, for_printing, image_height, image_width, image_max_height, image_max_width, render_to_single_page].hash
+      [start_page_number, count_pages_to_render, pages_to_render, page_rotations, default_font_name, default_encoding, detect_encoding, render_comments, render_notes, render_hidden_pages, spreadsheet_options, cad_options, email_options, project_management_options, pdf_document_options, word_processing_options, outlook_options, archive_options, text_options, mail_storage_options, visio_rendering_options, web_document_options, external_resources, resource_path, is_responsive, minify, exclude_fonts, fonts_to_exclude, for_printing, image_height, image_width, image_max_height, image_max_width, render_to_single_page, remove_java_script].hash
     end
 
     # Downcases first letter.
