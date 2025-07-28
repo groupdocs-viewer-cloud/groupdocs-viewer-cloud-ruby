@@ -1,23 +1,28 @@
 # GroupDocs.Viewer Cloud Ruby SDK
-Ruby gem for communicating with the GroupDocs.Viewer Cloud API
+Ruby gem for communicating with the GroupDocs.Viewer Cloud API. This SDK allows you to work with GroupDocs.Viewer Cloud REST APIs in your Ruby applications, enabling you to render documents in HTML, image, or PDF format with the flexibility to render the whole document or a custom range of pages.
+
+## Requirements
+
+Ruby 2.4+
 
 ## Installation
 
-A gem of groupdocs_viewer_cloud is available at [rubygems.org](https://rubygems.org). You can install it with:
+Install `groupdocs_viewer_cloud` from [RubyGems](https://rubygems.org):
 
-```shell
+```sh
 gem install groupdocs_viewer_cloud
-```    
-
-To add dependency to your app copy following into your Gemfile and run `bundle install`:
-
 ```
+
+Or add the dependency to your Gemfile and run `bundle install`:
+
+```ruby
 gem "groupdocs_viewer_cloud", "~> 25.7"
 ```
 
 ## Getting Started
 
-Please follow the [installation](#installation) procedure and then run the following code:
+Please follow the [installation procedure](#installation) and then run the following code:
+
 ```ruby
 # Load the gem
 require 'groupdocs_viewer_cloud'
@@ -27,16 +32,45 @@ app_sid = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 app_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 # Create instance of the API class
-api = GroupDocsViewerCloud::InfoApi.from_keys(app_sid, app_key)
+api_instance = GroupDocsViewerCloud::ViewApi.from_keys(app_sid, app_key)
 
-# Retrieve supported file-formats
-response = api.get_supported_file_formats
+format = "jpg"
+file = File.open("myfile.txt", "r")
 
-# Print out supported file-formats
-puts("Supported file-formats:")
-response.formats.each do |format|
-  puts("#{format.file_format} (#{format.extension})") 
-end
+request = GroupDocsViewerCloud::ConvertAndDownloadRequest.new(format, file)
+
+response = api_instance.convert_and_download(request)
+```
+
+Below is an example demonstrating how to upload a document, render it, and download the result using GroupDocs.Viewer Cloud SDK for Ruby:
+
+```ruby
+require 'groupdocs_viewer_cloud'
+
+app_sid = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+app_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+# Upload input file to cloud storage
+file_api_instance = GroupDocsViewerCloud::FileApi.from_keys(app_sid, app_key)
+upload_request = GroupDocsViewerCloud::UploadFileRequest.new("myfile.txt", "C:\\Data\\myfile.txt")
+file_api_instance.upload_file(upload_request)
+
+# Render to html format
+view_api_instance = GroupDocsViewerCloud::ViewApi.from_keys(app_sid, app_key)
+view_options = GroupDocsViewerCloud::ViewOptions.new
+view_options.file_info = GroupDocsViewerCloud::FileInfo.new
+view_options.file_info.file_path = "myfile.txt"
+view_options.view_format = "HTML"
+view_options.output_path = "myfile.html"
+
+create_view_request = GroupDocsViewerCloud::CreateViewRequest.new(view_options)
+view_api_instance.create_view(create_view_request)
+
+# Download result
+download_request = GroupDocsViewerCloud::DownloadFileRequest.new("myfile.html")
+response = file_api_instance.download_file(download_request)
+
+puts("Expected response type is Stream: #{response.size}")
 ```
 
 ## Licensing
@@ -50,4 +84,4 @@ GroupDocs.Viewer Cloud Ruby SDK licensed under [MIT License](LICENSE).
 + [**Blog**](https://blog.groupdocs.cloud/category/viewer)
 
 ## Contact Us
-Your feedback is very important to us. Please feel free to contact us using our [Support Forums](https://forum.groupdocs.cloud/c/viewer).
+Your feedback is very important to us. Please feel free to contact us
